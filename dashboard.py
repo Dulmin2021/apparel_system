@@ -1,3 +1,114 @@
+
+
+from tkinter import *
+from tkinter import ttk
+#################################################################################
+###########FUNCTIONALITY PART####################################################
+#################################################################################
+
+def employee_form(window):
+
+    global back_image
+    employee_frame=Frame(window, width=1070, height=567, bg='white')
+    employee_frame.place(x=200, y=100)
+    heading_Label=Label(employee_frame, text='Manage Employee Details', font=('times new roman','16', 'bold'), bg='#0f4d7d', fg='white')
+    heading_Label.place(x=0, y=0, relwidth=1)
+    back_image=PhotoImage(file='assets/back_button.png')
+
+    back_button=Button(employee_frame, image=back_image, bd=0, cursor='hand2', bg='white', command=lambda: employee_frame.place_forget())
+    back_button.place(x=10, y=30)
+
+    top_frame=Frame(employee_frame, bg='white')
+    top_frame.place(x=0, y=60, relwidth=1, height=235)
+    
+    search_frame=Frame(top_frame, bg='white')
+    search_frame.pack()
+    
+    search_combobox=ttk.Combobox(search_frame, values=('ID', 'Name', 'Email'),font=('times new roman','12'), state='readonly', justify=CENTER)
+    search_combobox.set('Search by')
+    search_combobox.grid(row=0, column=0, padx=20)
+    
+    search_entry=Entry(search_frame, font=('times new roman','12'), bg='lightyellow')
+    search_entry.grid(row=0, column=1)
+    
+    search_button=Button(search_frame, text='Search', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    search_button.grid(row=0, column=2, padx=20)
+    
+    show_button=Button(search_frame, text='Show All', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    show_button.grid(row=0, column=3)
+
+    employee_treeview=ttk.Treeview(top_frame, columns=('empid', 'name', 'email', 'gender', 'dob', 'contact', 'employment_type', 'education', 'work_shift', 'address', 'doj', 'salary', 'usertype'), show='headings')
+    employee_treeview.pack(pady=10)
+
+    employee_treeview.heading('empid', text='EmpId')
+    employee_treeview.heading('name', text='Name')
+    employee_treeview.heading('email', text='Email')
+    employee_treeview.heading('gender', text='Gender')
+    employee_treeview.heading('dob', text='DOB')
+    employee_treeview.heading('contact', text='Contact')
+    employee_treeview.heading('employment_type', text='Employment Type')
+    employee_treeview.heading('education', text='Education')
+    employee_treeview.heading('work_shift', text='Work shift')
+    employee_treeview.heading('address', text='Email')
+    employee_treeview.heading('doj', text='Joined Date')
+    employee_treeview.heading('salary', text='Salary')
+    employee_treeview.heading('usertype', text='Type')
+
+    employee_treeview.column('empid', width=60)
+    employee_treeview.column('name', width=140)
+    employee_treeview.column('email', width=180)
+    employee_treeview.column('gender', width=180)
+    employee_treeview.column('dob', width=180)
+    employee_treeview.column('contact', width=180)
+    employee_treeview.column('employment_type', width=120)
+    employee_treeview.column('education', width=120)
+    employee_treeview.column('work_shift', width=100)
+    employee_treeview.column('address', width=200)
+    employee_treeview.column('doj', width=100)
+    employee_treeview.column('salary', width=140)
+    employee_treeview.column('usertype', width=120)
+
+    detail_frame=Frame(employee_frame)
+    detail_frame.place(x=0, y=300)
+
+    empid_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'))
+    empid_label.grid(row=0, column=0, padx=20, pady=10)
+    empid_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    empid_entry.grid(row=0, column=1, padx=20, pady=10)
+
+    name_label=Label(detail_frame, text='Name',font=('times new roman', '12'))
+    name_label.grid(row=0, column=2, padx=20, pady=10)
+    name_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    name_entry.grid(row=0, column=3, padx=20, pady=10)
+
+    email_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'))
+    email_label.grid(row=0, column=4, padx=20, pady=10)
+    email_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    email_entry.grid(row=0, column=5, padx=20, pady=10)
+
+    gender_label=Label(detail_frame, text='Gender',font=('times new roman', '12'))
+    gender_label.grid(row=1, column=0, padx=20, pady=10)
+    gender_combobox=ttk.Combobox(detail_frame, values=('Male', 'Female'),font=('times new roman', '12'), width=18, state='readonly')
+    gender_combobox.set('Select Gender')
+    gender_combobox.grid(row=1, column=1)
+    
+    dob_label=Label(detail_frame, text='DOB',font=('times new roman', '12'))
+    dob_label.grid(row=0, column=2, padx=20, pady=10)
+
+
+
+
+
+
+
+
+
+
+
+#######################################################
+######################GUI PART#########################
+#######################################################
+
 from tkinter import *
 
 window=Tk()
@@ -18,8 +129,6 @@ subtitleLabel=Label(window, text="Welcome Admin\t\t Date: 14-04-2025\t\t Time: 1
 subtitleLabel.place(x=0, y=70, relwidth=1)
 
 leftFrame=Frame(window)
-
-
 leftFrame.place(x=0, y=102, width=200, height=555)
 
 logoImage=PhotoImage(file='assets/logo3.png')
@@ -27,14 +136,14 @@ imageLabel=Label(leftFrame, image=logoImage)
 imageLabel.pack()
 
 
-#######################################Menu and Menu Buttons###################################################################
+#Menu and Menu Buttons###################################################################
 
 menuLabel=Label(leftFrame, text='Menu', font=('times new roman', '20'), bg='#009688')
 menuLabel.pack(fill=X)
 
 
 employee_icon=PhotoImage(file='assets/employee.png')
-employee_button=Button(leftFrame, image=employee_icon, compound=LEFT, text='  Employees', font=('times new roman', '20', 'bold'), anchor='w', padx=10)
+employee_button=Button(leftFrame, image=employee_icon, compound=LEFT, text='  Employees', font=('times new roman', '20', 'bold'), anchor='w', padx=10, command=lambda: employee_form(window))# Bind the button to the function
 employee_button.pack(fill=X)
 
 supplier_icon=PhotoImage(file='assets/supplier.png')
@@ -103,15 +212,15 @@ total_cat_count_label.pack()
 
 
 #Products Frame
-prod_frame=Frame(window, bg='#27AE60', bd=3, relief=RIDGE)
+prod_frame=Frame(window, bg='#2C3E50', bd=3, relief=RIDGE)
 prod_frame.place(x=800, y=310, height=170, width=280) 
 total_prod_icon=PhotoImage(file='')
-total_prod_icon_label=Label(prod_frame, image=total_prod_icon, bg='#27AE60',)
+total_prod_icon_label=Label(prod_frame, image=total_prod_icon, bg='#2C3E50',)
 total_prod_icon_label.pack()
 
-total_prod_label=Label(prod_frame, text= 'Total Products', bg='#27AE60', fg='white', font=('times new roman', '15', 'bold'))
+total_prod_label=Label(prod_frame, text= 'Total Products', bg='#2C3E50', fg='white', font=('times new roman', '15', 'bold'))
 total_prod_label.pack()
-total_prod_count_label=Label(prod_frame, text= '0', bg='#27AE60', fg='white', font=('times new roman', '30', 'bold'))
+total_prod_count_label=Label(prod_frame, text= '0', bg='#2C3E50', fg='white', font=('times new roman', '30', 'bold'))
 total_prod_count_label.pack()
 
 
