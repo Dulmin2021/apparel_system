@@ -2,6 +2,7 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkcalendar import DateEntry
 #################################################################################
 ###########FUNCTIONALITY PART####################################################
 #################################################################################
@@ -15,12 +16,13 @@ def employee_form(window):
     heading_Label.place(x=0, y=0, relwidth=1)
     back_image=PhotoImage(file='assets/back_button.png')
 
-    back_button=Button(employee_frame, image=back_image, bd=0, cursor='hand2', bg='white', command=lambda: employee_frame.place_forget())
-    back_button.place(x=10, y=30)
 
     top_frame=Frame(employee_frame, bg='white')
-    top_frame.place(x=0, y=60, relwidth=1, height=235)
+    top_frame.place(x=0, y=40, relwidth=1, height=235)
     
+    back_button=Button(top_frame, image=back_image, bd=0, cursor='hand2', bg='white', command=lambda: employee_frame.place_forget())
+    back_button.place(x=10, y=0)
+
     search_frame=Frame(top_frame, bg='white')
     search_frame.pack()
     
@@ -67,41 +69,102 @@ def employee_form(window):
     employee_treeview.column('doj', width=100)
     employee_treeview.column('salary', width=140)
     employee_treeview.column('usertype', width=120)
-
-    detail_frame=Frame(employee_frame)
-    detail_frame.place(x=0, y=300)
-
-    empid_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'))
-    empid_label.grid(row=0, column=0, padx=20, pady=10)
+    
+#Detail Frame
+    detail_frame=Frame(employee_frame, bg='white')
+    detail_frame.place(x=20, y=280)
+#EmpID Label
+    empid_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'), bg='white')
+    empid_label.grid(row=0, column=0, padx=20, pady=10, sticky='W')
     empid_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
     empid_entry.grid(row=0, column=1, padx=20, pady=10)
-
-    name_label=Label(detail_frame, text='Name',font=('times new roman', '12'))
-    name_label.grid(row=0, column=2, padx=20, pady=10)
+#Name Label
+    name_label=Label(detail_frame, text='Name',font=('times new roman', '12'), bg='white')
+    name_label.grid(row=0, column=2, padx=20, pady=10, sticky='W')
     name_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
     name_entry.grid(row=0, column=3, padx=20, pady=10)
-
-    email_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'))
-    email_label.grid(row=0, column=4, padx=20, pady=10)
+#Email Label
+    email_label=Label(detail_frame, text='Email',font=('times new roman', '12'), bg='white')
+    email_label.grid(row=0, column=4, padx=20, pady=10, sticky='W')
     email_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
     email_entry.grid(row=0, column=5, padx=20, pady=10)
-
-    gender_label=Label(detail_frame, text='Gender',font=('times new roman', '12'))
-    gender_label.grid(row=1, column=0, padx=20, pady=10)
+#Gender Label
+    gender_label=Label(detail_frame, text='Gender',font=('times new roman', '12'), bg='white')
+    gender_label.grid(row=1, column=0, padx=20, pady=10, sticky='W')
     gender_combobox=ttk.Combobox(detail_frame, values=('Male', 'Female'),font=('times new roman', '12'), width=18, state='readonly')
     gender_combobox.set('Select Gender')
     gender_combobox.grid(row=1, column=1)
-    
-    dob_label=Label(detail_frame, text='DOB',font=('times new roman', '12'))
-    dob_label.grid(row=0, column=2, padx=20, pady=10)
+#DOB Label    
+    dob_label=Label(detail_frame, text='DOB',font=('times new roman', '12'), bg='white')
+    dob_label.grid(row=1, column=2, padx=20, pady=10, sticky='W')
+    dob_date_entry=DateEntry(detail_frame, width=18, font=('times new roman', 12), state='readonly', date_pattern='dd/mm/yyyy')
+    dob_date_entry.grid(row=1, column=3)
+#Contact Label
+    contact_label=Label(detail_frame, text='Contact',font=('times new roman', '12'), bg='white')
+    contact_label.grid(row=1, column=4, padx=20, pady=10, sticky='W')
+    contact_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    contact_entry.grid(row=1, column=5, padx=20, pady=10)
+#Employment Type Label
+    employment_type_label=Label(detail_frame, text='Employment Type',font=('times new roman', '12'), bg='white')
+    employment_type_label.grid(row=2, column=0, padx=20, pady=10, sticky='W')
+    employment_type_combobox=ttk.Combobox(detail_frame, values=('Full Time', 'Part Time', 'Casual', 'Contract', 'Intern'),font=('times new roman', '12'), width=18, state='readonly')
+    employment_type_combobox.set('Select Type')
+    employment_type_combobox.grid(row=2, column=1)
+#Education Label
+    edcation_label=Label(detail_frame, text='Education',font=('times new roman', '12'), bg='white')
+    edcation_label.grid(row=2, column=2, padx=20, pady=10, sticky='W')
+    education_options=["O/L", "O/L Passed" "A/L", "A/L Passed", "Diploma", "Dregree"]
+    edcation_combobox=ttk.Combobox(detail_frame, values=education_options, font=('times new roman', '12'), width=18, state='readonly')
+    edcation_combobox.set('Select Education')
+    edcation_combobox.grid(row=2, column=3)
+#Work shift Label
+    work_shift_label=Label(detail_frame, text='Work shift',font=('times new roman', '12'), bg='white')
+    work_shift_label.grid(row=2, column=4, padx=20, pady=10)
+    work_shift_combobox=ttk.Combobox(detail_frame, values=('Morning', 'Evening', 'Night'),font=('times new roman', '12'), width=18, state='readonly')
+    work_shift_combobox.set('Select shift')
+    work_shift_combobox.grid(row=2, column=5)
+#Address Label
+    address_label=Label(detail_frame, text='Address',font=('times new roman', '12'), bg='white')
+    address_label.grid(row=3, column=0, padx=20, pady=10, sticky='W')
+    address_text=Text(detail_frame, width=20, height=3, font=('times new roman', 12), bg='lightyellow')
+    address_text.grid(row=3, column=1, rowspan=2)
+#DOJ Label
+    doj_label=Label(detail_frame, text='Joined Date',font=('times new roman', '12'), bg='white')
+    doj_label.grid(row=3, column=2, padx=20, pady=10, sticky='W')
+    doj_date_entry=DateEntry(detail_frame, width=18, font=('times new roman', 12), state='readonly', date_pattern='dd/mm/yyyy')
+    doj_date_entry.grid(row=3, column=3)
+#User Type Label    
+    usertype_label=Label(detail_frame, text='User Type',font=('times new roman', '12'), bg='white')
+    usertype_label.grid(row=4, column=2, padx=20, pady=10)
+    usertype_combobox=ttk.Combobox(detail_frame, values=('Admin', 'Employee'),font=('times new roman', '12'), width=18, state='readonly')
+    usertype_combobox.set('Select User type')
+    usertype_combobox.grid(row=4, column=3)
+#Salary Label
+    salary_label=Label(detail_frame, text='Salary',font=('times new roman', '12'), bg='white')
+    salary_label.grid(row=3, column=4, padx=20, pady=10, sticky='W')
+    salary_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    salary_entry.grid(row=3, column=5, padx=20, pady=10)
+#Password Label
+    password_label=Label(detail_frame, text='Password',font=('times new roman', '12'), bg='white')
+    password_label.grid(row=4, column=4, padx=20, pady=10, sticky='W')
+    password_entry=Entry(detail_frame, font=('times new roman', '12'), bg='lightyellow')
+    password_entry.grid(row=4, column=5, padx=20, pady=10)
 
+#Buttons
+    button_frame=Frame(employee_frame, bg='white')
+    button_frame.place(x=200, y=520)
 
+    add_button=Button(button_frame, text='Add', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    add_button.grid(row=0, column=0, padx=20)
 
+    update_button=Button(button_frame, text='Update', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    update_button.grid(row=0, column=1, padx=20)
 
+    delete_button=Button(button_frame, text='Delte', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    delete_button.grid(row=0, column=2, padx=20)
 
-
-
-
+    clear_button=Button(button_frame, text='Clear', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    clear_button.grid(row=0, column=3, padx=20)
 
 
 
