@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import ttk
 
 
 def supplier_form(window):
@@ -38,10 +38,10 @@ def supplier_form(window):
     description_text.grid(row=3, column=1, pady=25)
 
 #Buttons####################
-    button_frame=Button(left_frame, bg='white')
+    button_frame=Frame(left_frame, bg='white')
     button_frame.grid(row=4, columnspan=2)
 
-    add_button=Button(button_frame, text='Add', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
+    add_button=Button(button_frame, text='Add', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d',)
     add_button.grid(row=0, column=0, padx=20)
 
     update_button=Button(button_frame, text='Update', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
@@ -52,3 +52,50 @@ def supplier_form(window):
 
     clear_button=Button(button_frame, text='Clear', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
     clear_button.grid(row=0, column=3)
+
+    #Right Frame#############################################################################
+
+    right_frame=Frame(supplier_frame, bg='white')
+    right_frame.place(x=520, y=95, width=500, height=350)
+
+    search_frame=Frame(right_frame, bg='white')
+    search_frame.pack(pady=(0,20))
+
+    num_label=Label(search_frame, text='Invoice No:', font=('times new roman',14, 'bold'), bg='white')
+    num_label.grid(row=0, column=0, padx=(0,15), sticky='W')
+    search_entry=Entry(search_frame, font=('times new roman', 14, 'bold'), bg='lightyellow', width=12)
+    search_entry.grid(row=0, column=1)
+
+    search_button=Button(search_frame, text='Search', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
+    search_button.grid(row=0, column=2, padx=15)
+
+    show_button=Button(search_frame, text='Show All', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
+    show_button.grid(row=0, column=3)
+
+
+    scrolly=Scrollbar(right_frame, orient=VERTICAL)
+    scrollx=Scrollbar(right_frame, orient=HORIZONTAL)
+    treeview = ttk.Treeview(right_frame, column=('invoice', 'name', 'contact', 'description'), show='headings', yscrollcommand=scrolly.set, xscrollcommand=scrollx.set)
+    scrolly.pack(side=RIGHT, fill=Y)  
+    scrollx.pack(side=BOTTOM, fill=X)
+    scrollx.config(command=treeview.xview) 
+    scrolly.config(command=treeview.yview) 
+    treeview.pack(fill=BOTH, expand=1)
+    treeview.heading('invoice', text='Invoice ID')
+    treeview.heading('name', text='Supplier Name')
+    treeview.heading('contact', text='Supplier Contact')
+    treeview.heading('description', text='Description')
+
+    treeview.column('invoice', width=80)
+    treeview.column('name', width=160)
+    treeview.column('contact', width=120)
+    treeview.column('description', width=300)
+
+
+
+
+
+
+
+
+
