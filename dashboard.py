@@ -1,14 +1,9 @@
 
 from tkinter import *
 from employees import employee_form
-#################################################################################
-###########FUNCTIONALITY PART######Moved to new employees file ###################
-#################################################################################
+from suppliers import supplier_form
 
-##########################################
-#########GUI PART#########################
-##########################################
-
+#########GUI PART
 
 window=Tk()
 
@@ -46,7 +41,7 @@ employee_button=Button(leftFrame, image=employee_icon, compound=LEFT, text='  Em
 employee_button.pack(fill=X)
 
 supplier_icon=PhotoImage(file='assets/supplier.png')
-supplier_button=Button(leftFrame, image=supplier_icon, compound=LEFT, text='  Suppliers', font=('times new roman', '20', 'bold'), anchor='w', padx=10)
+supplier_button=Button(leftFrame, image=supplier_icon, compound=LEFT, text='  Suppliers', font=('times new roman', '20', 'bold'), anchor='w', padx=10, command=lambda: supplier_form(window))
 supplier_button.pack(fill=X)
 
 category_icon=PhotoImage(file='assets/category.png')
