@@ -1,5 +1,19 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
+from employees import connect_database
+
+def add_supplier(invoice, name, contact, description):
+    if invoice =='' or name =='' or contact =='' or description.strip()=='':
+        messagebox.showerror('Error', 'All fields are required')
+    else:
+        cursor, connection=connect_database()
+        if not cursor or not connection:
+            return
+        cursor.execute('use inventory_system')
+        cursor.execute('CREATE TABLE supplier_data(INVOICE PRIMARY KEY, name VARCHAR(100), contact VARCHAR(15), description TEXT)')
+        pass    
+        
 
 
 def supplier_form(window):
@@ -41,7 +55,19 @@ def supplier_form(window):
     button_frame=Frame(left_frame, bg='white')
     button_frame.grid(row=4, columnspan=2)
 
-    add_button=Button(button_frame, text='Add', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d',)
+    add_button=Button(
+        button_frame,
+        text='Add',
+        font=('times new roman','14'),
+        width=8,
+        cursor='hand2',
+        fg='white',
+        bg='#0f4d7d',
+        command=lambda: add_supplier(invoice_entry.get(), 
+                                     name_entry.get(),
+                                     contact_entry.get(),
+                                     description_text.get(1.0,END)
+                                     ))
     add_button.grid(row=0, column=0, padx=20)
 
     update_button=Button(button_frame, text='Update', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')

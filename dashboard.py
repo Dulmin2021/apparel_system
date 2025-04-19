@@ -2,6 +2,7 @@
 from tkinter import *
 from employees import employee_form
 from suppliers import supplier_form
+from category import category_form
 
 #########GUI PART
 
@@ -45,7 +46,7 @@ supplier_button=Button(leftFrame, image=supplier_icon, compound=LEFT, text='  Su
 supplier_button.pack(fill=X)
 
 category_icon=PhotoImage(file='assets/category.png')
-category_button=Button(leftFrame, image=category_icon, compound=LEFT, text='  Categories', font=('times new roman', '20', 'bold'), anchor='w', padx=10)
+category_button=Button(leftFrame, image=category_icon, compound=LEFT, text='  Categories', font=('times new roman', '20', 'bold'), anchor='w', padx=10, command=lambda: category_form(window))
 category_button.pack(fill=X)
 
 product_icon=PhotoImage(file='assets/product.png')
