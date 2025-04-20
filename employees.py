@@ -10,7 +10,7 @@ def connect_database():
         cursor = connection.cursor()
     except:
         messagebox.showerror('Error', 'Database connectivity issue, open MySQL command line client')
-        return 
+        return cursor, connection
 
     # Corrected SQL syntax
     cursor.execute('CREATE DATABASE IF NOT EXISTS inventory_system')

@@ -3,16 +3,39 @@ from tkinter import ttk
 from tkinter import messagebox
 from employees import connect_database
 
-def add_supplier(invoice, name, contact, description):
-    if invoice =='' or name =='' or contact =='' or description.strip()=='':
+def treeview_data(treeview):
+    cursor,connection=connect_database()
+    if not cursor or not connection:
+        return
+    cursor.execute('use inventory_system')
+    cursor.execute('SELECT * FROM supplier_data')
+    records=cursor.fetchall()
+    treeview.delete(*treeview.get_children())
+    for record in records:
+        treeview.insert('', END, values=record)
+
+def add_supplier(invoice, name, contact, description, treeview):
+    if invoice == '' or name == '' or contact == '' or description.strip() == '':
         messagebox.showerror('Error', 'All fields are required')
     else:
-        cursor, connection=connect_database()
+        cursor, connection = connect_database()
         if not cursor or not connection:
             return
-        cursor.execute('use inventory_system')
-        cursor.execute('CREATE TABLE supplier_data(INVOICE PRIMARY KEY, name VARCHAR(100), contact VARCHAR(15), description TEXT)')
-        pass    
+        cursor.execute('USE inventory_system')
+        cursor.execute('CREATE TABLE IF NOT EXISTS supplier_data (invoice INT PRIMARY KEY, name VARCHAR(100), contact VARCHAR(15), description TEXT)')
+        
+        # Check for duplicate invoice
+        cursor.execute('SELECT * FROM supplier_data WHERE invoice = %s', (invoice,))
+        if cursor.fetchone():
+            messagebox.showerror('Error', 'Invoice ID already exists')
+            return
+        
+        # Insert data
+        cursor.execute('INSERT INTO supplier_data VALUES (%s, %s, %s, %s)', (invoice, name, contact, description.strip()))
+        connection.commit()
+        messagebox.showinfo('Info', 'Data is inserted')
+        treeview_data(treeview)
+           
         
 
 
@@ -63,11 +86,13 @@ def supplier_form(window):
         cursor='hand2',
         fg='white',
         bg='#0f4d7d',
-        command=lambda: add_supplier(invoice_entry.get(), 
-                                     name_entry.get(),
-                                     contact_entry.get(),
-                                     description_text.get(1.0,END)
-                                     ))
+        command=lambda: add_supplier(
+            invoice_entry.get(), 
+            name_entry.get(),
+            contact_entry.get(),
+            description_text.get(1.0, END),
+            treeview
+         ))
     add_button.grid(row=0, column=0, padx=20)
 
     update_button=Button(button_frame, text='Update', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')

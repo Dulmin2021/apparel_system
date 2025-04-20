@@ -1,4 +1,27 @@
 from tkinter import * 
+from tkinter import ttk
+from tkinter import messagebox
+from employees import connect_database
+
+
+def add_category(id, name, description):
+    if id == '' or name == '' or description == '':
+        messagebox.showerror('Error', 'All fields are required')
+    else:
+        cursor, connection = connect_database()
+        if not cursor or not connection:
+            return
+        cursor.execute('USE inventory_system')
+        cursor.execute('CREATE TABLE IF NOT EXISTS category_data (id INT PRIMARY KEY, name VARCHAR(100), description TEXT)')
+        cursor.execute('SELECT * from category_data WHERE id=%s', id)
+        if cursor.fetchone():
+            messagebox.showerror('Error', 'Id already exists')
+            return
+        cursor.execute('INSERT INTO category_data VALUES (%s, %s, %s)', (id, name, description))
+        connection.commit()
+        messagebox.showinfo('Info', 'Data is inserted')
+        treeview_data(treeview)   
+
 
 
 def category_form(window):
@@ -30,7 +53,7 @@ def category_form(window):
     category_name_entry.grid(row=1, column=1, pady=20)
 
     description_label=Label(details_frame, text='Description:', font=('times new roman',14, 'bold'), bg='white')
-    description_label.grid(row=1, column=0, padx=20, sticky='nw')
+    description_label.grid(row=2, column=0, padx=20, sticky='nw')
     description_text=Text(details_frame, width=25, height=6, bd=2, bg='lightyellow')
     description_text.grid(row=2, column=1)
 
@@ -44,7 +67,8 @@ def category_form(window):
         width=8,
         cursor='hand2',
         fg='white',
-        bg='#0f4d7d')
+        bg='#0f4d7d',
+        command=lambda: add_category(id_entry.get(), category_name_entry.get(), description_text.get(1.0,END).strip()))
     add_button.grid(row=0, column=0, padx=20)
 
     delete_button=Button(
@@ -57,3 +81,21 @@ def category_form(window):
         bg='#0f4d7d')
     delete_button.grid(row=0, column=1, padx=20)
     
+    treeview_frame=Frame(category_frame, bg='lightyellow')
+    treeview_frame.place(x=530, y=340, height=200, width=500)
+
+    scrolly=Scrollbar(treeview_frame, orient=VERTICAL)
+    scrollx=Scrollbar(treeview_frame, orient=HORIZONTAL)
+    treeview = ttk.Treeview(treeview_frame, column=('id', 'name', 'description'), show='headings', yscrollcommand=scrolly.set, xscrollcommand=scrollx.set)
+    scrolly.pack(side=RIGHT, fill=Y)  
+    scrollx.pack(side=BOTTOM, fill=X)
+    scrollx.config(command=treeview.xview) 
+    scrolly.config(command=treeview.yview) 
+    treeview.pack(fill=BOTH, expand=1)
+    treeview.heading('id', text='ID')
+    treeview.heading('name', text='Category Name')
+    treeview.heading('description', text='Description')
+
+    treeview.column('id', width=80)
+    treeview.column('name', width=140)
+    treeview.column('description', width=300)
