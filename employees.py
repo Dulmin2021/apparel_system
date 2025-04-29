@@ -10,7 +10,7 @@ def connect_database():
         cursor = connection.cursor()
     except:
         messagebox.showerror('Error', 'Database connectivity issue, open MySQL command line client')
-        return cursor, connection
+        return None, None
 
     # Corrected SQL syntax
     cursor.execute('CREATE DATABASE IF NOT EXISTS inventory_system')
@@ -24,6 +24,7 @@ def connect_database():
             dob VARCHAR(30), 
             contact VARCHAR(30), 
             employment_type VARCHAR(50), 
+            education VARCHAR(50),
             work_shift VARCHAR(50), 
             address VARCHAR(100), 
             doj VARCHAR(30), 
@@ -32,6 +33,7 @@ def connect_database():
             password VARCHAR(50)
         )
     ''')
+   
     connection.commit()
     connection.close()
    
@@ -81,17 +83,18 @@ def employee_form(window):
     employee_treeview.heading('employment_type', text='Employment Type')
     employee_treeview.heading('education', text='Education')
     employee_treeview.heading('work_shift', text='Work shift')
-    employee_treeview.heading('address', text='Email')
+    employee_treeview.heading('address', text='Address')
     employee_treeview.heading('doj', text='Joined Date')
     employee_treeview.heading('salary', text='Salary')
     employee_treeview.heading('usertype', text='Type')
+    employee_treeview.heading('password', text='Password')
 
     employee_treeview.column('empid', width=60)
     employee_treeview.column('name', width=140)
-    employee_treeview.column('email', width=180)
-    employee_treeview.column('gender', width=180)
-    employee_treeview.column('dob', width=180)
-    employee_treeview.column('contact', width=180)
+    employee_treeview.column('email', width=140)
+    employee_treeview.column('gender', width=100)
+    employee_treeview.column('dob', width=120)
+    employee_treeview.column('contact', width=140)
     employee_treeview.column('employment_type', width=120)
     employee_treeview.column('education', width=120)
     employee_treeview.column('work_shift', width=100)
@@ -99,6 +102,8 @@ def employee_form(window):
     employee_treeview.column('doj', width=100)
     employee_treeview.column('salary', width=140)
     employee_treeview.column('usertype', width=120)
+    employee_treeview.column('password', width=120)
+    
     
 #Detail Frame
     detail_frame=Frame(employee_frame, bg='white')
@@ -141,12 +146,12 @@ def employee_form(window):
     employment_type_combobox.set('Select Type')
     employment_type_combobox.grid(row=2, column=1)
 #Education Label
-    edcation_label=Label(detail_frame, text='Education',font=('times new roman', '12'), bg='white')
-    edcation_label.grid(row=2, column=2, padx=20, pady=10, sticky='W')
-    education_options=["O/L", "O/L Passed" "A/L", "A/L Passed", "Diploma", "Dregree"]
-    edcation_combobox=ttk.Combobox(detail_frame, values=education_options, font=('times new roman', '12'), width=18, state='readonly')
-    edcation_combobox.set('Select Education')
-    edcation_combobox.grid(row=2, column=3)
+    education_label=Label(detail_frame, text='Education',font=('times new roman', '12'), bg='white')
+    education_label.grid(row=2, column=2, padx=20, pady=10, sticky='W')
+    education_options = ["O/L", "O/L Passed", "A/L", "A/L Passed", "Diploma", "Degree"]
+    education_combobox=ttk.Combobox(detail_frame, values=education_options, font=('times new roman', '12'), width=18, state='readonly')
+    education_combobox.set('Select Education')
+    education_combobox.grid(row=2, column=3)
 #Work shift Label
     work_shift_label=Label(detail_frame, text='Work shift',font=('times new roman', '12'), bg='white')
     work_shift_label.grid(row=2, column=4, padx=20, pady=10)
@@ -190,7 +195,7 @@ def employee_form(window):
     update_button=Button(button_frame, text='Update', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
     update_button.grid(row=0, column=1, padx=20)
 
-    delete_button=Button(button_frame, text='Delte', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    delete_button=Button(button_frame, text='Delete', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
     delete_button.grid(row=0, column=2, padx=20)
 
     clear_button=Button(button_frame, text='Clear', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
