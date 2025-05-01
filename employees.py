@@ -6,8 +6,12 @@ import pymysql
 
 def connect_database():
     try:
-        connection = pymysql.connect(host='localhost', user='root', password='902190')
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='902190')
         cursor = connection.cursor()
+        return cursor, connection
     except:
         messagebox.showerror('Error', 'Database connectivity issue, open MySQL command line client')
         return None, None

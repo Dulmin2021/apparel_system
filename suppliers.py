@@ -123,6 +123,8 @@ def supplier_form(window):
     show_button=Button(search_frame, text='Show All', font=('times new roman','14'), width=8, cursor='hand2', fg='white', bg='#0f4d7d')
     show_button.grid(row=0, column=3)
 
+    
+
 
     scrolly=Scrollbar(right_frame, orient=VERTICAL)
     scrollx=Scrollbar(right_frame, orient=HORIZONTAL)
