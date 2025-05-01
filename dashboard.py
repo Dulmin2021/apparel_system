@@ -9,7 +9,7 @@ from category import category_form
 window=Tk()
 
 window.title('Dashboard')
-window.geometry('1270x668+0+0')
+window.geometry('1270x750+0+0')
 window.resizable(0,0)
 window.config(bg='white')
 

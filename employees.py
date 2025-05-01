@@ -36,13 +36,17 @@ def connect_database():
    
     connection.commit()
     connection.close()
+
+
+def add_employee(empid,name,email,gender,dob,contact,employment_type,education,work_shift,address,doj,salary,user_type,password):
+    print(empid, name)    
    
 
 
 def employee_form(window):
 
     global back_image
-    employee_frame=Frame(window, width=1070, height=567, bg='white')
+    employee_frame=Frame(window, width=1070, height=700, bg='white')
     employee_frame.place(x=200, y=100)
     heading_Label=Label(employee_frame, text='Manage Employee Details', font=('times new roman','16', 'bold'), bg='#0f4d7d', fg='white')
     heading_Label.place(x=0, y=0, relwidth=1)
@@ -104,10 +108,12 @@ def employee_form(window):
     employee_treeview.column('usertype', width=120)
     employee_treeview.column('password', width=120)
     
-    
+
+#Labels and Frame
+
 #Detail Frame
-    detail_frame=Frame(employee_frame, bg='white')
-    detail_frame.place(x=20, y=280)
+    detail_frame = Frame(employee_frame, bg='white')
+    detail_frame.place(x=20, y=300)
 #EmpID Label
     empid_label=Label(detail_frame, text='EmpId',font=('times new roman', '12'), bg='white')
     empid_label.grid(row=0, column=0, padx=20, pady=10, sticky='W')
@@ -187,9 +193,25 @@ def employee_form(window):
 
 #Buttons
     button_frame=Frame(employee_frame, bg='white')
-    button_frame.place(x=200, y=520)
+    button_frame.place(x=200, y=450)
 
-    add_button=Button(button_frame, text='Add', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
+    add_button=Button(button_frame, text='Add', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d',
+                    command=lambda:add_employee(
+                        empid_entry.get(),
+                        name_entry.get(),
+                        email_entry.get(),
+                        gender_combobox.get(),
+                        dob_date_entry.get(),
+                        contact_entry.get(),
+                        employment_type_combobox.get(),
+                        education_combobox.get(),
+                        work_shift_combobox.get(),
+                        address_text.get(1.0,END),
+                        doj_date_entry.get(),
+                        salary_entry.get(),
+                        usertype_combobox.get(),
+                        password_entry.get()
+                        ))
     add_button.grid(row=0, column=0, padx=20)
 
     update_button=Button(button_frame, text='Update', font=('times new roman','12'), width=10, cursor='hand2', fg='white', bg='#0f4d7d')
